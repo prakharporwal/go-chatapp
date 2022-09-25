@@ -10,6 +10,7 @@ type Pool struct {
 }
 
 func (pool *Pool) Start() {
+
 	for {
 		select {
 		case client := <-pool.Register:
@@ -20,6 +21,7 @@ func (pool *Pool) Start() {
 				client.Conn.WriteJSON(Message{Type: 1, Body: "New User Joined ..."})
 			}
 			break
+			
 		case client := <-pool.Unregister:
 			delete(pool.Clients, client)
 			fmt.Println("size of connection pool", len(pool.Clients))
